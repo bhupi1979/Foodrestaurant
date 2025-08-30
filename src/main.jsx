@@ -19,6 +19,7 @@ import Adminpassword from './Comman/Adminpassword.jsx'
 import Adminpanel from './Pages/Adminpanel.jsx'
 import Addtocart from './Pages/Mainoperation/Addtocart.jsx'
 import Movetotop from './Movetotop.jsx'
+import Reports from './Pages/Adminpanelnew/Reports.jsx'
 let allroutes=createBrowserRouter([
   {
     path:'/',
@@ -48,6 +49,10 @@ let allroutes=createBrowserRouter([
   {
     path:'/orders',
     element:<Addtocart/>
+  },
+  {
+    path:'/reports',
+    element:<Reports/>
   },
   {
     path:'*',

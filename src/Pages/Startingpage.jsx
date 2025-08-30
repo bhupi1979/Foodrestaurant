@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {cartdataviewbystatus, fetchTables } from './Adminpanelnew/Api'
 import { formatDate, formatTime } from './Adminpanelnew/Dateconversion'
+import Sidebar from './Sidebar'
 
 
 export default function Startingpage() {
@@ -13,6 +14,7 @@ export default function Startingpage() {
     const [roomarr,setroomarr]=useState([])
     const navigate=useNavigate()
     const [loadcartdata,setloadcartdata]=useState([])
+    const [showreport,setshowreport]=useState(false)
   // const [parcelarr,setparcelarr]=useState([])
   // const [roomarr,setroomarr]=useState([])
  
@@ -99,15 +101,25 @@ export default function Startingpage() {
           {//alert('not findcart data')
             navigate('/orders',{state:{table}})}
   }
+  const handlehemburg=(e)=>{
+    if(e.target.value=='hide')
+    setshowreport(true)
+  else 
+    setshowreport(false)
+  }
   return (
     <>
-      <h1 className='bg bg-info text-dark text-uppercase'>this is starting page</h1>
-      <ul className="list-group list-group-horizontal-lg">
+      <h1 className='bg bg-info text-dark text-uppercase w-100'>this is starting page</h1>
+      <ul className="list-group list-group-horizontal-lg w-100">
+      <button value={showreport?'show':'hide'} style={{fontSize:'35px'}} className="btn btn-danger p-3 position-absolute start-0 top-0" onClick={handlehemburg}>
+      &#9776;
+    </button>
   <li className="list-group-item"><h5>WELCOME user{username} register on date {userdate}</h5>
 </li>
   <li className="list-group-item bg bg-dark text-warning fs-5">Go to Admin Panel <button className=' btn btn-info px-3 rounded-circle py-1 text-danger' onClick={gotoadmin}>Click</button></li>
   <li className="list-group-item"><button className=' p-1 bg bg-info text-danger' onClick={logout1}>LOGOUT</button></li>
 </ul>
+{showreport && <Sidebar/>}
 <h1 className='text-start'>THE DINING TABLE{tc}</h1>
 <div style={{backgroundColor:'#a89393ff'}} className='py-4'>
 {tablearr.map((item,i)=>{

@@ -16,6 +16,14 @@ const [loading,setLoading]=useState(false)
 const navigate=useNavigate()
 const location=useLocation()
 const {findcartdata,table}=location.state||{}
+const [userdetail,setuserdetail]=useState({username:"",
+        mobilenumber:"",
+        address:"",
+        locality:"",
+        gstnumber:"",
+        paymentmode:"",
+        paymentsettlement:""})
+const [showdetail,setshowdetail]=useState(false)
   
   useEffect(() => {
     if((table===undefined||table===null||table==="")&&!sessionStorage.getItem('adminpass'))
@@ -127,7 +135,17 @@ const generateqt = async (e) => {
   try {
     if (!findcartdata) {
       // New order
-      const obj = { mode: table, status1: qrorbill, orders: cartdata };
+
+      const obj = { mode: table, status1: qrorbill, orders: cartdata,...userdetail
+      //   username:userdetail.username,
+      //   mobilenumber:userdetail.mobilenumber,
+      //   address:userdetail.address,
+      //   locality:userdetail.locality,
+      //   gstnumber:userdetail.gstnumber,
+      //   paymentmode:userdetail.paymentmode,
+      //   paymentsettlement:userdetail.paymentsettlement
+      //  };
+      }
       await cartdatainsert(obj);
       toast("cartdata added successfully!");
       qrorbill === "bill" ? Printbill(obj) : Printqt(obj);
@@ -141,7 +159,7 @@ const generateqt = async (e) => {
     // } 
     else {
       // Update ongoing QT
-      const updatedObj = { ...findcartdata, status1: qrorbill, orders: cartdata };
+      const updatedObj = { ...findcartdata, status1: qrorbill, orders: cartdata,...userdetail };
       await cartdataupdate(findcartdata._id, updatedObj);
       toast("cartdata updated successfully!");
       qrorbill === "bill" ? Printbill(updatedObj) : Printqt(updatedObj);
@@ -155,18 +173,28 @@ const generateqt = async (e) => {
     setLoading(false);
   }
 };
-
+const handlechange=(e)=>{
+const {name,value}=e.target
+setuserdetail((prev)=>({...prev,[name]:value}))
+}
+const handlesettle=(e)=>{
+  if(e.target.value=='show')
+setshowdetail(true)
+  else
+    setshowdetail(false)
+}
   return (
     <>
     {loading&&<Loader/>}
-    <h1 className=' bg-danger text-white text-uppercase'> BILLING SECTION</h1> <span className='d-block float-end'><button className='btn btn-info' onClick={()=>{navigate("/Startpage")}} >GO-Back</button></span>
-    <div className="container">
+    <div className="container-fluid">
+          <h1 className=' bg-danger text-white text-uppercase'> BILLING SECTION</h1> <span className='d-block float-end'><button className='btn btn-info' onClick={()=>{navigate("/Startpage")}} >GO-Back</button></span>
+
         <div className="row">
-            <div className="col-lg-5">
+            <div className="col-lg-4">
               <select className="form-select mb-4"
               onChange={oncategorychange}
               >
-                <option value="">-- Select --</option>
+                <option value="">-- Select-Category--</option>
             {categories.map((cat) => (
               <option key={cat._id} value={cat._id}>
                 {cat.categoryname}
@@ -180,10 +208,15 @@ const generateqt = async (e) => {
               </button>
             ))}
             </div>
-            <div className="col-lg-7">
+            <div className="col-lg-8">
   <h1 className='bg-info text-black-50 text-uppercase'>The Cart Items</h1>
-  <h3 className='bg-secondary text-warning'>THE MODE: <b className='text-dark'>{table}</b> </h3>
-   <table className="table table-success table-striped table-hover text-center w-75 mx-auto table-responsive p-4" border='1'>
+  <h3 className='bg-secondary text-warning'>THE MODE: <b className='text-white'>{table}</b> </h3>
+
+   <div className="container-fluid">
+      <div className="row">
+        <div className="col-lg-9">
+{/* the cart secont start here */}
+<table className="table table-success table-striped table-hover text-center w-100 mx-auto table-responsive p-4" border='1'>
         <thead>
           <tr>
             <th>Name</th>
@@ -207,8 +240,88 @@ const generateqt = async (e) => {
 
         </tbody>
         </table>
-        <button className='btn btn-primary me-4' value={cartdata} onClick={generateqt}>GenerateQt</button><button className='btn btn-danger'  value={'bill'} onClick={generateqt}>GeneratBill</button>
-            </div>
+        <button className='btn btn-primary me-4' value={cartdata} onClick={generateqt}>GenerateQT</button><button className='btn btn-danger'  value={'bill'} onClick={generateqt}>Bill-n-Settle</button>
+            
+{/* the cart section ends here */}
+        </div>
+        <div className="col-lg-3">
+          {/* the form i hserer */}
+          <button className='btn btn-warning' value={showdetail?"hide":'show'}onClick={handlesettle}>{showdetail?'Hide':'Settle-Payment'}</button>
+         {showdetail && <form className='w-100 border-1 border-dark border p-1' style={{fontSize:'12px'}}>
+  <div className="mb-3">
+    <label  className="form-label">Enter Name</label>
+    <input type="text" className="form-control" name="username" value={userdetail.username||""} onChange={handlechange} />
+   </div>
+  <div className="mb-3">
+    <label  className="form-label">Enter Mobile Number</label>
+    <input type="text" className="form-control" name="mobilenumber" value={userdetail.mobilenumber||""} onChange={handlechange} />
+   </div>
+  <div className="mb-3">
+    <label  className="form-label">Enter Address</label>
+    <input type="text" className="form-control" name="address" value={userdetail.address||""} onChange={handlechange} />
+   </div>
+   <div className="mb-3">
+    <label  className="form-label"> Enter Locality</label>
+    <input type="text" className="form-control" name="locality" value={userdetail.locality||""} onChange={handlechange} />
+   </div>
+   <div className="mb-3">
+    <label  className="form-label">Enter GST-Number</label>
+    <input type="text" className="form-control" name="gstnumber" value={userdetail.gstnumber||""}  onChange={handlechange}/>
+   </div>
+   {/* radio button start here */}
+   <div style={{backgroundColor:'#fcc'}} >
+     <label  className="form-label">Select Payment Mode</label>
+   <div className="form-check border border-1 ">
+     <input className="form-check-input " type="radio" name="paymentmode" value="cash" onChange={handlechange} />
+  <label className="form-check-label" >
+    CASH
+  </label>
+</div>
+<div className="form-check border border-1">
+  <input className="form-check-input " type="radio" name="paymentmode" value="card" onChange={handlechange}/>
+  <label className="form-check-label" >
+    CARD
+  </label>
+</div>
+<div className="form-check border border-1">
+  <input className="form-check-input " type="radio" name="paymentmode" value="upi" onChange={handlechange}/>
+  <label className="form-check-label" >
+    UPI
+  </label>
+</div>
+</div>
+{/* payment settlement */}
+<div style={{backgroundColor:'#fcc'}} >
+     <label  className="form-label">Select Payment Settlement</label>
+   <div className="form-check border border-1">
+     <input className="form-check-input" type="radio" name="paymentsettlement" value="full" onChange={handlechange}/>
+  <label className="form-check-label" >
+    Full-Payment
+  </label>
+</div>
+<div className="form-check border border-1 ">
+  <input className="form-check-input " type="radio" name="paymentsettlement" value="part" onChange={handlechange}/>
+  <label className="form-check-label" >
+    Part-Payment
+  </label>
+</div>
+<div className="form-check border border-1 ">
+  <input className="form-check-input " type="radio" name="paymentsettlement" value="due" onChange={handlechange}/>
+  <label className="form-check-label" >
+    Payment-DUE
+  </label>
+</div>
+</div>
+</form>}
+        </div>
+        {/* end of form here */}
+      </div>
+   </div>
+  
+
+
+   </div> 
+            {/* col-lg-10 ends here */}
         </div>
     </div>
     </>

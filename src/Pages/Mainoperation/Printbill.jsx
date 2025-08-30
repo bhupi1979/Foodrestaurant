@@ -26,14 +26,14 @@ const billHeight = headerFooterHeight + (rowHeight * totalRows);
 
     // ===== HEADER =====
     doc.setFontSize(12);
-    doc.text(shopName, 30, 10, { align: "center" });
+    doc.text(shopName, 35, 10, { align: "center" });
     doc.setFontSize(9);
-    doc.text(shopAddress1, 30, 15, { align: "center" })
-     doc.text(shopAddress2, 30, 20, { align: "center" })
-      doc.text(shopAddress3, 30, 25, { align: "center" })
-       doc.text(`GSTIN:${GST}`, 30, 30, { align: "center" })
+    doc.text(shopAddress1, 35, 15, { align: "center" })
+     doc.text(shopAddress2, 35, 20, { align: "center" })
+      doc.text(shopAddress3, 35, 25, { align: "center" })
+       doc.text(`GSTIN:${GST}`, 35, 30, { align: "center" })
     doc.text(`Date: ${billDate} Mode:${Mode}`,37, 35, {align:"center"})
-    doc.text(`cashier Bhavesh Billno :- 6643`, 30, 40, { align: "center" });
+    doc.text(`cashier Bhavesh Billno :- 6643`, 35, 40, { align: "center" });
 
     // ===== TABLE HEADER =====
     let startY = 50;
