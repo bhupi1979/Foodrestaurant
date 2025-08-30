@@ -6,7 +6,8 @@ import * as XLSX from "xlsx";
 import { formatDate, formatTime } from './Dateconversion';
 export default function Reportsgrandtotal(props) {
     const [filterText, setFilterText] = useState("");
-    const arraydisplaydata = props.fetchreportdisplaydata?.map((v) => {
+    let arraydisplaydata=[]
+    arraydisplaydata = props.fetchreportdisplaydata?.map((v) => {
   return {
      name:v.username,
      mobileno:v.mobilenumber,
@@ -21,7 +22,34 @@ export default function Reportsgrandtotal(props) {
     datentime:` ${formatDate(v.updatedAt)}::${formatTime(v.updatedAt)}`
   }
 }) || [];
-const sampleData =arraydisplaydata
+let reportarray=[]
+  switch(props.reportvalue)
+  {
+    case 'all':
+      reportarray=arraydisplaydata
+    break
+      case 'due':
+        reportarray=arraydisplaydata.filter((v)=>v.paymentsettlement==='due')
+        break
+        case 'card':
+           reportarray=arraydisplaydata.filter((v)=>v.paymentmode==='card')
+           break
+            case 'upi':
+           reportarray=arraydisplaydata.filter((v)=>v.paymentmode==='upi')
+           break
+           case 'full':
+           reportarray=arraydisplaydata.filter((v)=>v.paymentsettlement==='full')
+           break
+
+           case'part':
+           reportarray=arraydisplaydata.filter((v)=>v.paymentsettlement==='part')
+           break
+           case'cash':
+           reportarray=arraydisplaydata.filter((v)=>v.paymentmode==='cash')
+           break
+  }
+
+const sampleData =reportarray
 // Table Columns
 
 const columns = [{

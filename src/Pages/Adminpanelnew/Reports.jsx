@@ -3,12 +3,16 @@ import { reportdata } from './Api';
 import Reportdisplay from './Reportdisplayall';
 import Loader from '../../Comman/Loader';
 import Reportsgrandtotal from './Reportsgrandtotal';
+import { useLocation } from 'react-router-dom';
 
 export default function Reports() {
     const [startdate,setstartdate]=useState("")
     const [enddate, setenddate]=useState("")
     const [fetchreportdata,setfetchreportdata]=useState([])
     const [loading,setLoading]=useState(false)
+    const location=useLocation()
+const {rep}=location.state||{}
+console.log(rep)
     const getreport= async()=>{
          if(startdate==""||startdate==null)
            {alert("please select start date")
@@ -40,8 +44,8 @@ export default function Reports() {
       return (
     <> {loading && <Loader />}
         <div className="container">
-        <h4>SELECT TOTAL SALE BETWEEN START DATE AND END DATE</h4>
-<div className="row bg-info">
+        <h4 className='d-inline-block'>SELECT {rep} SALE BETWEEN START DATE AND END DATE</h4> <span className='d-inline-block'><button className='btn btn-secondary' onClick={()=>{window.location.href='/startpage'}}>GotoStartpage</button></span>
+<div className="row bg-info my-2">
     <div className="mb-3 text-start p-4 col-lg-6">
     <label className="form-label ">Enter start date</label>
     <input type="date" className="form-control" name="startdate" value={startdate||""} onChange={(e)=>{setstartdate(e.target.value)}} />
@@ -56,7 +60,7 @@ export default function Reports() {
         {/* conntain end shere */}
         {/* fetching data starts here */}
         {/* <Reportdisplay fetchreportdisplaydata={fetchreportdata}/> */}
-        <Reportsgrandtotal fetchreportdisplaydata={fetchreportdata}/>
+        <Reportsgrandtotal fetchreportdisplaydata={fetchreportdata} reportvalue={rep}/>
         </>
   )
 }
