@@ -20,11 +20,18 @@ export default function Header() {
         </Navbar.Collapse>
       </Container >
     </Navbar>
-    <h1 className='text-center text-dark my-5'>WELCOME TO RESTAURNT APP</h1>
-    <p className='text-danger mb-5 '>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam quidem iure soluta molestiae sed minus quae debitis alias doloremque corporis, animi ullam laudantium ut et veniam placeat nisi corrupti quibusdam.
-    Explicabo commodi vitae aliquam animi expedita tempore placeat omnis, amet similique reiciendis delectus labore rerum velit. Voluptas nihil optio nam neque nostrum commodi? Aspernatur sed voluptatum porro ullam quibusdam laborum?
-    Aut quae rerum veritatis mollitia esse dolorum ratione itaque sapiente quasi odit nostrum dignissimos maiores illum minima eius atque sequi necessitatibus optio, quo, exercitationem ut eos incidunt? Deleniti, cumque porro.</p>
-     <Carousel className='carousel1'>
+    <h1 className='text-center text-dark my-5 text-uppercase'>WELCOME TO RELAX INN Restaurant</h1>
+    <p className='text-danger mb-5 '>
+Tucked away in the heart of the city, RELAX INN offers a warm and inviting escape for food lovers. From the moment you step inside, the soft lighting, earthy décor, and gentle aroma of freshly cooked dishes create a sense of comfort. The restaurant specializes in Indian and continental cuisine, blending traditional flavors with modern presentation.
+
+Guests can begin their meal with a range of appetizers, from crispy samosas to creamy soups, before moving on to signature main courses like butter chicken, paneer tikka masala, grilled fish, and wood-fired pizzas. Every dish is prepared with carefully selected spices and locally sourced ingredients to ensure freshness and authenticity.
+
+The spacious dining hall is complemented by cozy seating for families, while the outdoor patio provides a romantic setting for couples. Whether you are celebrating a special occasion or simply enjoying a casual dinner, the friendly and attentive staff make every visit memorable.
+
+To complete the experience, RELAX INN also offers a wide selection of beverages, including refreshing mocktails, artisanal teas, and fine wines. With its balanced mix of flavors, atmosphere, and hospitality, this restaurant has become a beloved destination for both locals and travelers.
+
+    </p>
+     {/* <Carousel className='carousel1'>
       <Carousel.Item>
         <img src="https://i.postimg.cc/VLXQ554v/image1.jpg" className='img-fluid' alt='image1'/>
       </Carousel.Item>
@@ -37,7 +44,7 @@ export default function Header() {
       <Carousel.Item>
         <img src="https://i.postimg.cc/g2dJ2Cy9/image4.jpg"  className='img-fluid' alt='image1'/>
       </Carousel.Item>
-    </Carousel>
+    </Carousel> */}
     </>
   )
 }
